@@ -1,0 +1,11 @@
+{
+  "item.secrets_magic.sapphire": "Sapphire",
+  "item.secrets_magic.metal_detector": "Metal Detector",
+
+  "block.secrets_magic.sapphire_block": "Block of Sapphire",
+  "block.secrets_magic.sapphire_ore": "Sapphire Ore",
+
+  "tooltip.secrets_magic.metal_detector.tooltip": "Find Ores Easy!",
+
+  "creativetab.secrets_tab": "Secret's Magic"
+}

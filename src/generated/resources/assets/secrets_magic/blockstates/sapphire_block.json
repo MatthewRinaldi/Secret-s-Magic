@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "secrets_magic:block/sapphire_block"
+    }
+  }
+}

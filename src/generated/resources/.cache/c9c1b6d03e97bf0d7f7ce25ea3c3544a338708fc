@@ -1,0 +1,4 @@
+// 1.20.1	2024-10-14T08:21:27.85925476	Tags for minecraft:block mod id secrets_magic
+18b44de3a69993d40693ee8b9160d0ea575a363c data/minecraft/tags/blocks/mineable/pickaxe.json
+18b44de3a69993d40693ee8b9160d0ea575a363c data/minecraft/tags/blocks/needs_iron_tool.json
+774e4bfad2140ba951eef167034740e6395cf22e data/secrets_magic/tags/blocks/metal_detector_valuables.json

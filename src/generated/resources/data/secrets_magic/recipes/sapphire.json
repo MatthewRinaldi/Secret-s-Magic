@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "secrets_magic:sapphire_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "item": "secrets_magic:sapphire"
+  }
+}
