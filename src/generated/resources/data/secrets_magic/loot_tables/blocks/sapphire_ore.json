@@ -50,7 +50,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "secrets_magic:sapphire"
+              "name": "secrets_magic:raw_sapphire"
             }
           ]
         }
