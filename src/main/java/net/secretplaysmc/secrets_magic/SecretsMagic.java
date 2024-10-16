@@ -3,7 +3,7 @@ package net.secretplaysmc.secrets_magic;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -14,10 +14,18 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.secretplaysmc.secrets_magic.block.ModBlocks;
 import net.secretplaysmc.secrets_magic.item.ModCreativeModeTab;
 import net.secretplaysmc.secrets_magic.item.ModItems;
+import net.secretplaysmc.secrets_magic.loot.ModLootModifiers;
+import net.secretplaysmc.secrets_magic.mana.AttachCapabilitiesEventHandler;
+import net.secretplaysmc.secrets_magic.mana.ManaHUDOverlay;
+import net.secretplaysmc.secrets_magic.mana.PlayerMana;
+import net.secretplaysmc.secrets_magic.network.ModNetworking;
+import net.secretplaysmc.secrets_magic.potion.ModEffects;
+import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(SecretsMagic.MOD_ID)
+@Mod.EventBusSubscriber(modid = SecretsMagic.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class SecretsMagic {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "secrets_magic";
@@ -30,19 +38,29 @@ public class SecretsMagic {
         ModCreativeModeTab.register(modEventBus);
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModLootModifiers.register(modEventBus);
+        ModEffects.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::clientSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
-        modEventBus.addListener(this::addCreative);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(AttachCapabilitiesEventHandler.class);
+        ModNetworking.registerPackets();
     }
 
-    // Add the example block item to the building blocks tab
-    private void addCreative (BuildCreativeModeTabContentsEvent event) {
+    private void clientSetup(final FMLClientSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(ManaHUDOverlay.class);
+    }
 
+
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(PlayerMana.class);
+        event.register(PlayerSpells.class);
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
@@ -51,7 +69,7 @@ public class SecretsMagic {
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = SecretsMagic.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {

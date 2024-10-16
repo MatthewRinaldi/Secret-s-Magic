@@ -84,7 +84,7 @@ public class MetalDetectorItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatable("tooltip.tutorial_mod.metal_detector.tooltip"));
+        pTooltipComponents.add(Component.translatable("tooltip.secrets_magic.metal_detector.tooltip"));
 
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }

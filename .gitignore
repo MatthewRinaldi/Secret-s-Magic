@@ -17,9 +17,26 @@ out
 build
 .gradle
 
+# Log files
+*.log
+*.log.gz
+
+# Temporary files
+*.tmp
+
+# Generated files (datagen)
+generated/
+
 # other
 eclipse
 run
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Gradle wrapper jar
+gradle/wrapper/gradle-wrapper.jar
 
 # Files from Forge MDK
 forge*changelog.txt

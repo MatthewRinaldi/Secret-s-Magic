@@ -1,7 +1,0 @@
-// 1.20.1	2024-10-14T08:21:27.8609388	Block States: secrets_magic
-79577f9f7af89e459f34eaf8a5277c6a997ab72b assets/secrets_magic/blockstates/sapphire_block.json
-1aef1574856cf68e2ebbdb78874b772e6a3caef9 assets/secrets_magic/blockstates/sapphire_ore.json
-297b71c4f805c6aa9584d1ffc1bdaa4cb2893255 assets/secrets_magic/models/block/sapphire_block.json
-fe6b7cf11847d856d69ac202f83e4f2571ad81a3 assets/secrets_magic/models/block/sapphire_ore.json
-febe0844e2fdf432774f71d676e1e0e47cfe57b2 assets/secrets_magic/models/item/sapphire_block.json
-331f1a246931ad9dde27de20abf37e4d2da87ded assets/secrets_magic/models/item/sapphire_ore.json

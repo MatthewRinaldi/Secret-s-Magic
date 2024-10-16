@@ -8,5 +8,19 @@
 
   "tooltip.secrets_magic.metal_detector.tooltip": "Find Ores Easy!",
 
+  "item.secrets_magic.sapphire_sword": "Sapphire Sword",
+  "item.secrets_magic.sapphire_pickaxe": "Sapphire Pickaxe",
+  "item.secrets_magic.sapphire_axe": "Sapphire Axe",
+  "item.secrets_magic.sapphire_shovel": "Sapphire Shovel",
+  "item.secrets_magic.sapphire_hoe": "Sapphire Hoe",
+
+  "item.secrets_magic.sapphire_helmet": "Sapphire Helmet",
+  "item.secrets_magic.sapphire_chestplate": "Sapphire Chestplate",
+  "item.secrets_magic.sapphire_leggings": "Sapphire Leggings",
+  "item.secrets_magic.sapphire_boots": "Sapphire Boots",
+
+  "item.secrets_magic.wand": "Magical Wand",
+  "effect.secrets_magic.mana_regen": "Mana Regen",
+
   "creativetab.secrets_tab": "Secret's Magic"
 }

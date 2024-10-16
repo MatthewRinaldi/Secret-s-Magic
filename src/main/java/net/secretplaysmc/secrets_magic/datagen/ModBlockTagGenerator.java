@@ -28,7 +28,9 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                         ModBlocks.SAPPHIRE_BLOCK.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.SAPPHIRE_ORE.get(),
-                        ModBlocks.SAPPHIRE_BLOCK.get());
+                .add(ModBlocks.SAPPHIRE_ORE.get());
+
+        this.tag(ModTags.Blocks.NEEDS_SAPPHIRE_TOOL)
+                .add(ModBlocks.SAPPHIRE_BLOCK.get());
     }
 }
