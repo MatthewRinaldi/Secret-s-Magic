@@ -1,7 +1,6 @@
 package net.secretplaysmc.secrets_magic.mana;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.packs.repository.Pack;
 import net.minecraftforge.network.PacketDistributor;
 import net.secretplaysmc.secrets_magic.network.ManaSyncPacket;
 import net.secretplaysmc.secrets_magic.network.ModNetworking;

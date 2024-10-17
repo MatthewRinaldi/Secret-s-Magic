@@ -23,10 +23,32 @@ public class ManaHUDOverlay {
                     int screenWidth = minecraft.getWindow().getGuiScaledWidth();
                     int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
-                    // Create a GuiGraphic to draw text
+                    // Render Mana
                     GuiGraphics guiGraphics = event.getGuiGraphics();
-                    String manaDisplay = "Mana: " + mana.getMana() + "/" + mana.getMaxMana();
+                    String manaDisplay;
+                    if (minecraft.player.isCreative()) {
+                        manaDisplay = "Mana: Infinite";
+                    } else {
+                        manaDisplay = "Mana: " + mana.getMana() + "/" + mana.getMaxMana();
+                    }
                     guiGraphics.drawString(minecraft.font, manaDisplay, screenWidth / 2 + 20, screenHeight - 50, 0x00FFFF, false);
+
+                    // Render Spell Charge Bar
+                    if (minecraft.player.isUsingItem()) {
+                        int chargeTime = minecraft.player.getTicksUsingItem();
+                        float chargePercentage = Math.min((float) chargeTime / 20, 1.0F);
+
+                        // Set bar dimensions and position
+                        int barWidth = 65;
+                        int barHeight = 10;
+                        int barX = (screenWidth - barWidth) / 2 + 53; // Center the bar horizontally
+                        int barY = screenHeight - 70; // Place it above the mana display
+
+                        guiGraphics.fill(barX, barY, barX + barWidth, barY + barHeight, 0xFF808080); // Gray bar (empty)
+
+                        int filledWidth = (int) (barWidth * chargePercentage);
+                        guiGraphics.fill(barX, barY, barX + filledWidth, barY + barHeight, 0xFF00FFFF); // Blue bar (filled)
+                    }
                 });
             }
         }

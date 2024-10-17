@@ -10,27 +10,27 @@ import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.secretplaysmc.secrets_magic.spells.effects.SpellEffect;
+import net.secretplaysmc.secrets_magic.spells.modifiers.SpellModifier;
+import net.secretplaysmc.secrets_magic.spells.triggers.SpellTrigger;
+
+import java.util.List;
 
 public class Spell {
     private final String name;
     private final int manaCost;
-    private final SpellType type;
-    private int damage;  // For projectiles
-    private double speed;  // For projectiles or other effects
-    private int duration;
+    private final int castTime;
+    private final SpellEffect effect;
+    private final List<SpellModifier> modifiers;
+    private final SpellTrigger trigger;
 
-    public Spell(String name, int manaCost, SpellType type) {
+    public Spell(String name, int manaCost, int castTime, SpellEffect effect, List<SpellModifier> modifiers, SpellTrigger trigger) {
         this.name = name;
         this.manaCost = manaCost;
-        this.type = type;
-    }
-
-    public SpellType getType() {
-        return type;
-    }
-
-    public String getName() {
-        return name;
+        this.castTime = castTime;
+        this.effect = effect;
+        this.modifiers = modifiers;
+        this.trigger = trigger;
     }
 
     public int getManaCost() {
@@ -38,32 +38,18 @@ public class Spell {
     }
 
     public void cast(Level world, ServerPlayer player, ItemStack wandItem) {
-        switch (type) {
-            case PROJECTILE:
-                shootProjectile(world, player);
-                break;
-            case BUFF:
-                applyBuff(player);
-                break;
-            case AREA_EFFECT:
-                break;
-        }
+        trigger.execute(world, player, this);
     }
 
-    private void shootProjectile(Level world, ServerPlayer player) {
-        Arrow arrow = new Arrow(world, player);
-        arrow.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, BowItem.getPowerForTime(72000) * 3.0F, 1.0F);
-        world.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ARROW_SHOOT, SoundSource.PLAYERS, 1.0F, 1.0F);
-        world.addFreshEntity(arrow);
-        arrow.pickup = AbstractArrow.Pickup.DISALLOWED;
+    public SpellEffect getEffect() {
+        return effect;
     }
 
-    private void applyBuff(ServerPlayer player) {
-        player.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 100, 3));
-        player.addEffect(new MobEffectInstance(MobEffects.SATURATION, 100, 3));
+    public List<SpellModifier> getModifiers() {
+        return modifiers;
     }
 
-    private void triggerAreaEffect(Level world, ServerPlayer player) {
-        // Your AoE logic here
+    public String getSpellName() {
+        return name;
     }
 }

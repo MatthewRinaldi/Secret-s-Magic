@@ -1,5 +1,6 @@
 package net.secretplaysmc.secrets_magic.item.custom;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -63,10 +64,32 @@ public class WandItem extends Item {
         return InteractionResultHolder.consume(itemStack);
     }
 
+    @Override
+    public void onUseTick(Level pLevel, LivingEntity pLivingEntity, ItemStack pStack, int pRemainingUseDuration) {
+        if (pLivingEntity instanceof  Player player && player.level().isClientSide) {
+            for (int i = 0; i < 2; i++) {
+                double offsetX = (player.level().random.nextDouble() - 0.5) * 2.0;
+                double offsetY = player.level().random.nextDouble() * 2.0;
+                double offsetZ = (player.level().random.nextDouble() - 0.5) * 2.0;
+
+                player.level().addParticle(ParticleTypes.ENCHANT,
+                        player.getX() + offsetX, player.getY() + offsetY, player.getZ() + offsetZ,
+                        0.0, 0.0, 0.0);
+            }
+        }
+    }
+
     // Called when the player stops using the wand (release shot)
     @Override
     public void releaseUsing(ItemStack stack, Level world, LivingEntity entity, int timeLeft) {
         if (!world.isClientSide() && entity instanceof ServerPlayer player) {
+            int useDuration = this.getUseDuration(stack);  // Maximum possible duration (e.g. 72000)
+            int chargeTime = useDuration - timeLeft;  // How long the player has charged the wand
+
+            if (chargeTime < 20) {
+                return;
+            }
+
             // access mana
             player.getCapability(ManaCapabilityProvider.MANA_CAPABILITY).ifPresent(mana -> {
                 int selectedSpellIndex = getSelectedSpell(stack);
@@ -77,12 +100,20 @@ public class WandItem extends Item {
                         String spellName = learnedSpells.get(selectedSpellIndex);
                         Spell spell = ModSpells.getSpell(spellName);
 
-                        if (mana.getMana() >= spell.getManaCost()) {
-                            mana.consumeMana(spell.getManaCost());
-                            spell.cast(world, player, stack);
-                            mana.syncManaWithClient(player);
+                        if (spell != null) {
+                            if (player.isCreative()) {
+                                spell.cast(world, player, stack);
+                            } else {
+                                if (mana.getMana() >= spell.getManaCost()) {
+                                    mana.consumeMana(spell.getManaCost());
+                                    spell.cast(world, player, stack);
+                                    mana.syncManaWithClient(player);
+                                } else {
+                                    player.sendSystemMessage(Component.literal("Not Enough Mana!"));
+                                }
+                            }
                         } else {
-                            player.sendSystemMessage(Component.literal("Not Enough Mana!"));
+                            player.sendSystemMessage(Component.literal("Spell not found!"));
                         }
                     }
                 });
