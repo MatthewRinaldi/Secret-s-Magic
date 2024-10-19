@@ -1,5 +1,6 @@
 package net.secretplaysmc.secrets_magic.spells.effects;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Arrow;
@@ -27,6 +28,17 @@ public class ProjectileEffect implements SpellEffect {
 
     public Arrow getArrow() {
         return arrow;
+    }
+
+    @Override
+    public CompoundTag toNBT() {
+        CompoundTag tag = new CompoundTag();
+        tag.putString("effectType", "projectileEffect");
+        return tag;
+    }
+
+    public static ProjectileEffect fromNBT(CompoundTag tag) {
+        return new ProjectileEffect();
     }
 
 }

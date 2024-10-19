@@ -1,5 +1,6 @@
 package net.secretplaysmc.secrets_magic.spells.modifiers;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.projectile.Arrow;
 import net.minecraft.world.item.ItemStack;
@@ -23,5 +24,22 @@ public class DamageBoostModifier implements SpellModifier{
         } else if (effect instanceof FireballEffect fireballEffect) {
             fireballEffect.damageBoost((float) damageBoost);
         }
+    }
+
+    @Override
+    public CompoundTag toNBT() {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putString("modifierType", "damageBoostModifier");
+
+        tag.putDouble("boost", this.damageBoost);
+        return tag;
+    }
+
+    public static DamageBoostModifier fromNBT(CompoundTag tag) {
+
+        double boost = tag.getInt("boost");
+
+        return new DamageBoostModifier(boost);
     }
 }

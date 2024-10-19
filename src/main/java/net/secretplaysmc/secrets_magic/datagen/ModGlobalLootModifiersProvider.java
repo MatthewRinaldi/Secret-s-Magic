@@ -21,7 +21,7 @@ public class ModGlobalLootModifiersProvider extends GlobalLootModifierProvider {
     protected void start() {
         add("sapphire_from_grass", new AddItemModifier(new LootItemCondition[] {
                 LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.GRASS).build(),
-                LootItemRandomChanceCondition.randomChance(0.80f).build()}, ModItems.SAPPHIRE.get()));
+                LootItemRandomChanceCondition.randomChance(0.10f).build()}, ModItems.SAPPHIRE.get()));
 
         add("sapphire_from_creeper", new AddItemModifier(new LootItemCondition[] {
                 new LootTableIdCondition.Builder(new ResourceLocation("entities/creeper")).build()

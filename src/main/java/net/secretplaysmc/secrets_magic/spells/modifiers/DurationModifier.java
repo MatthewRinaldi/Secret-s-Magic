@@ -1,5 +1,6 @@
 package net.secretplaysmc.secrets_magic.spells.modifiers;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -19,5 +20,22 @@ public class DurationModifier implements SpellModifier{
         if (effect instanceof BuffEffect buffEffect) {
             buffEffect.increaseDuration(extendedDuration);
         }
+    }
+
+    @Override
+    public CompoundTag toNBT() {
+        CompoundTag tag = new CompoundTag();
+
+        tag.putString("modifierType", "durationModifier");
+
+        tag.putInt("duration", this.extendedDuration);
+        return tag;
+    }
+
+    public static DurationModifier fromNBT(CompoundTag tag) {
+
+        int duration = tag.getInt("duration");
+
+        return new DurationModifier(duration);
     }
 }

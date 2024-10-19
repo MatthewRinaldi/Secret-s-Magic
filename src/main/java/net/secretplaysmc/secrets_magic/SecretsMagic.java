@@ -1,9 +1,12 @@
 package net.secretplaysmc.secrets_magic;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,7 +23,11 @@ import net.secretplaysmc.secrets_magic.mana.ManaHUDOverlay;
 import net.secretplaysmc.secrets_magic.mana.PlayerMana;
 import net.secretplaysmc.secrets_magic.network.ModNetworking;
 import net.secretplaysmc.secrets_magic.potion.ModEffects;
+import net.secretplaysmc.secrets_magic.spells.ModSpells;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
+import net.secretplaysmc.secrets_magic.util.ModCommands;
+import net.secretplaysmc.secrets_magic.util.ModContainers;
+import net.secretplaysmc.secrets_magic.util.gui.CustomSpellScreen;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -40,6 +47,7 @@ public class SecretsMagic {
         ModBlocks.register(modEventBus);
         ModLootModifiers.register(modEventBus);
         ModEffects.register(modEventBus);
+        ModContainers.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::clientSetup);
@@ -54,6 +62,7 @@ public class SecretsMagic {
 
     private void clientSetup(final FMLClientSetupEvent event) {
         MinecraftForge.EVENT_BUS.register(ManaHUDOverlay.class);
+        MenuScreens.register(ModContainers.CUSTOM_SPELL.get(), CustomSpellScreen::new);
     }
 
 
@@ -63,9 +72,16 @@ public class SecretsMagic {
         event.register(PlayerSpells.class);
     }
 
+    @SubscribeEvent
+    public void onRegisterCommands(RegisterCommandsEvent event) {
+        ModCommands.register(event.getDispatcher());
+    }
+
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting (ServerStartingEvent event) {
+        ServerLevel world = event.getServer().overworld();
+        ModSpells.loadCustomSpells(world);
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
