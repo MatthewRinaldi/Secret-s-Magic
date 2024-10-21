@@ -23,10 +23,12 @@ import net.secretplaysmc.secrets_magic.mana.ManaHUDOverlay;
 import net.secretplaysmc.secrets_magic.mana.PlayerMana;
 import net.secretplaysmc.secrets_magic.network.ModNetworking;
 import net.secretplaysmc.secrets_magic.potion.ModEffects;
+import net.secretplaysmc.secrets_magic.skillTree.PlayerSkills;
 import net.secretplaysmc.secrets_magic.spells.ModSpells;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
 import net.secretplaysmc.secrets_magic.util.ModCommands;
 import net.secretplaysmc.secrets_magic.util.ModContainers;
+import net.secretplaysmc.secrets_magic.util.ModKeybindings;
 import net.secretplaysmc.secrets_magic.util.gui.CustomSpellScreen;
 import org.slf4j.Logger;
 
@@ -70,6 +72,7 @@ public class SecretsMagic {
     public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
         event.register(PlayerMana.class);
         event.register(PlayerSpells.class);
+        event.register(PlayerSkills.class);
     }
 
     @SubscribeEvent
@@ -89,6 +92,7 @@ public class SecretsMagic {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            ModKeybindings.register();
         }
     }
 }

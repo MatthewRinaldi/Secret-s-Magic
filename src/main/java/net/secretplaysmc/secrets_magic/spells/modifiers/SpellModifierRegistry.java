@@ -2,7 +2,9 @@ package net.secretplaysmc.secrets_magic.spells.modifiers;
 
 import net.minecraft.nbt.CompoundTag;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -17,5 +19,9 @@ public class SpellModifierRegistry {
 
     public static Function<CompoundTag, SpellModifier> getModifier(String type) {
         return registry.get(type);
+    }
+
+    public static List<String> getAllModifierNames() {
+        return new ArrayList<>(registry.keySet());
     }
 }

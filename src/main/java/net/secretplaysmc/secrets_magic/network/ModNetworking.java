@@ -19,5 +19,7 @@ public class ModNetworking {
         INSTANCE.registerMessage(id++, ManaSyncPacket.class, ManaSyncPacket::toBytes, ManaSyncPacket::new, ManaSyncPacket::handle);
         INSTANCE.registerMessage(id++, SpellsSyncPacket.class, SpellsSyncPacket::toBytes, SpellsSyncPacket::new, SpellsSyncPacket::handle);
         INSTANCE.registerMessage(id++, SpellCreationPacket.class, SpellCreationPacket::toBytes, SpellCreationPacket::new, SpellCreationPacket::handle);
+        INSTANCE.registerMessage(id++, UnlockNodePacket.class, UnlockNodePacket::toBytes, UnlockNodePacket::new, UnlockNodePacket::handle);
+        INSTANCE.registerMessage(id++, SkillsSyncPacket.class, SkillsSyncPacket::toBytes, SkillsSyncPacket::new, SkillsSyncPacket::handle);
     }
 }

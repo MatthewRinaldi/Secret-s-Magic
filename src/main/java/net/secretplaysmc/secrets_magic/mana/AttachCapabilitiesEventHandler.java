@@ -12,6 +12,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.secretplaysmc.secrets_magic.SecretsMagic;
+import net.secretplaysmc.secrets_magic.skillTree.PlayerSkillsProvider;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpellsProvider;
 
@@ -23,6 +24,7 @@ public class AttachCapabilitiesEventHandler {
         if (event.getObject() instanceof Player) {
             event.addCapability(new ResourceLocation(SecretsMagic.MOD_ID, "mana"), new ManaCapabilityProvider());
             event.addCapability(new ResourceLocation(SecretsMagic.MOD_ID, "spells"), new PlayerSpellsProvider());
+            event.addCapability(new ResourceLocation(SecretsMagic.MOD_ID, "player_skills"), new PlayerSkillsProvider());
         }
     }
 
@@ -47,6 +49,9 @@ public class AttachCapabilitiesEventHandler {
                     spells.syncSpellsWithClient(player);
                 }
             });
+            player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
+                skills.syncSkillsWithClient(player);
+            });
         }
     }
     @SubscribeEvent
@@ -69,6 +74,11 @@ public class AttachCapabilitiesEventHandler {
                         newSpells.syncSpellsWithClient(serverPlayer);
                     else
                         System.out.println("Not a ServerPlayer, can't sync");
+                });
+            });
+            event.getOriginal().getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(oldSkills -> {
+                event.getEntity().getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(newSkills -> {
+                    newSkills.getUnlockedNodes().addAll(oldSkills.getUnlockedNodes());
                 });
             });
             event.getOriginal().invalidateCaps();
