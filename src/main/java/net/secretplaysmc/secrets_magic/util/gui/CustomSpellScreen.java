@@ -1,6 +1,7 @@
 package net.secretplaysmc.secrets_magic.util.gui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -136,6 +137,16 @@ public class CustomSpellScreen extends AbstractContainerScreen<CustomSpellContai
                     .build()
                 )
             );
+
+            dynamicButtons.add(
+                    this.addRenderableWidget(Button.builder(Component.literal("AoE"),
+                            button -> {
+                                selectedModifier = "AoE";
+                            })
+                            .pos(optionsX + optionsWidth + 20, this.topPos + 40)
+                            .size(optionsWidth, 20)
+                            .build())
+            );
         } else if (typeButtonClicked) {
             // Display Modifier options dynamically
             int optionsX = this.leftPos + (int) (this.imageWidth * 0.1);
@@ -210,7 +221,6 @@ public class CustomSpellScreen extends AbstractContainerScreen<CustomSpellContai
         String spellDetails = selectedType + " + " + selectedModifier + " + " + selectedTrigger;
         int spellDetailsWidth = this.font.width(spellDetails);
         int spellDetailsX = (this.imageWidth / 2) - (spellDetailsWidth / 2);
-        System.out.println(spellDetailsX);
 
         guiGraphics.drawString(this.font, spellDetails, spellDetailsX, 10, 0x00FFFF, false);
     }

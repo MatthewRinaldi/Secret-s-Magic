@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.secretplaysmc.secrets_magic.spells.effects.customObjects.ExplosiveSmallFireball;
+import net.secretplaysmc.secrets_magic.spells.modifiers.AoEModifier;
 import net.secretplaysmc.secrets_magic.spells.modifiers.SpellModifier;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class FireballEffect implements SpellEffect{
 
     private float velocity = 2.0F;
     private float power = 2.0F;
+
 
     @Override
     public void apply(Level world, ServerPlayer player, ItemStack wandItem, List<SpellModifier> modifiers) {
@@ -27,9 +29,13 @@ public class FireballEffect implements SpellEffect{
 
         for (SpellModifier modifier : modifiers) {
             modifier.modify(this, world, player, wandItem);
+            if (modifier instanceof AoEModifier aoEModifier) {
+                fireball.getRadiusFromModifiers(aoEModifier.sendRadius());
+            }
         }
 
         world.addFreshEntity(fireball);
+
     }
 
     public void amplifyVelocity(float enhanceAmplification) {

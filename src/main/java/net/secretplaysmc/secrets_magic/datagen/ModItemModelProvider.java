@@ -56,6 +56,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         // Unique Items
         handheldItem(ModItems.WAND);
+        handheldItem(ModItems.DEV_WAND);
     }
 
     private ItemModelBuilder simpleItem(RegistryObject<Item> item) {

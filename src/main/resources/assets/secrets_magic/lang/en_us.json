@@ -21,6 +21,7 @@
 
   "item.secrets_magic.wand": "Magical Wand",
   "effect.secrets_magic.mana_regen": "Mana Regen",
+  "item.secrets_magic.dev_wand": "Dev Wand",
 
   "creativetab.secrets_tab": "Secret's Magic"
 }

@@ -33,7 +33,6 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
             for (String node : unlockedNodes) {
                 if (!listTag.contains(StringTag.valueOf(node))) {
                     listTag.add(StringTag.valueOf(node));
-                    System.out.println("Saving node: " + node);
                 }
             }
             tag.put("unlockedNodes", listTag);
@@ -48,7 +47,6 @@ public class PlayerSkillsProvider implements ICapabilitySerializable<CompoundTag
             skills.clearNodes();
             for (Tag nodeTag : unlockedNodes) {
                 skills.unlockNode(nodeTag.getAsString());
-                System.out.println("Loading node: " + nodeTag.getAsString());
             }
         });
     }

@@ -7,6 +7,7 @@ import net.secretplaysmc.secrets_magic.spells.effects.BuffEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.FireballEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.ProjectileEffect;
 import net.secretplaysmc.secrets_magic.spells.modifiers.AmplificationModifier;
+import net.secretplaysmc.secrets_magic.spells.modifiers.AoEModifier;
 import net.secretplaysmc.secrets_magic.spells.modifiers.DamageBoostModifier;
 import net.secretplaysmc.secrets_magic.spells.modifiers.DurationModifier;
 import net.secretplaysmc.secrets_magic.spells.triggers.InstantTrigger;
@@ -31,7 +32,7 @@ public class ModSpells {
                 "heal",
                 50,
                 20,
-                new BuffEffect(MobEffects.REGENERATION, 200),
+                new BuffEffect(MobEffects.REGENERATION),
                 Arrays.asList(new DurationModifier(400), new AmplificationModifier(2)),
                 new InstantTrigger()
         ));
@@ -42,6 +43,51 @@ public class ModSpells {
                 20,
                 new FireballEffect(),
                 Arrays.asList(new AmplificationModifier(1), new DamageBoostModifier(0)),
+                new InstantTrigger()
+        ));
+
+        SPELLS.put("AOETEST_Arrow_Inverted", new Spell(
+                "AOETEST_Arrow_Inverted",
+                50,
+                20,
+                new ProjectileEffect(),
+                Arrays.asList(new AoEModifier(5, true)),
+                new InstantTrigger()
+        ));
+
+        SPELLS.put("AOETEST_Arrow_Not_Inverted", new Spell(
+                "AOETEST_Arrow_Not_Inverted",
+                50,
+                20,
+                new ProjectileEffect(),
+                Arrays.asList(new AoEModifier(5, false)),
+                new InstantTrigger()
+        ));
+
+        SPELLS.put("AOETEST_Buff", new Spell(
+                "AOETEST_Buff",
+                50,
+                20,
+                new BuffEffect(MobEffects.DAMAGE_RESISTANCE),
+                Arrays.asList(new DurationModifier(600), new AmplificationModifier(2), new AoEModifier(5, false)),
+                new InstantTrigger()
+        ));
+
+        SPELLS.put("AOETEST_Fireball", new Spell(
+                "AOETEST_Fireball",
+                50,
+                20,
+                new FireballEffect(),
+                Arrays.asList(new DamageBoostModifier(3), new AoEModifier(1, false)),
+                new InstantTrigger()
+        ));
+
+        SPELLS.put("AOETEST_Fireball_Recursive3", new Spell(
+                "AOETEST_Fireball_Recursive3",
+                50,
+                20,
+                new FireballEffect(),
+                Arrays.asList(new DamageBoostModifier(3), new AoEModifier(3, false)),
                 new InstantTrigger()
         ));
     }

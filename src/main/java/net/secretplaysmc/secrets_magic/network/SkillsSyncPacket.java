@@ -6,6 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.network.NetworkEvent;
 import net.secretplaysmc.secrets_magic.skillTree.PlayerSkillsProvider;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,12 +22,19 @@ public class SkillsSyncPacket {
 
     // Constructor for decoding packet (reading data)
     public SkillsSyncPacket(FriendlyByteBuf buf) {
-        this.unlockedNodes = buf.readCollection(LinkedHashSet::new, FriendlyByteBuf::readUtf);  // Read list of strings
+        int size = buf.readInt();
+        this.unlockedNodes = new HashSet<>();
+        for (int i = 0; i < size; i++) {
+            this.unlockedNodes.add(buf.readUtf(32767));
+        }
     }
 
     // Encode packet (writing data)
     public void toBytes(FriendlyByteBuf buf) {
-        buf.writeCollection(unlockedNodes, FriendlyByteBuf::writeUtf);  // Write list of nodes
+        buf.writeInt(this.unlockedNodes.size());
+        for (String node : unlockedNodes) {
+            buf.writeUtf(node);
+        }
     }
 
     // Handle packet on the client side
@@ -35,8 +43,8 @@ public class SkillsSyncPacket {
             Player player = Minecraft.getInstance().player;
             if (player != null) {
                 player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
-                    skills.getUnlockedNodes().clear();
-                    skills.getUnlockedNodes().addAll(this.unlockedNodes);  // Sync with the client
+                    skills.clearNodes();
+                    this.unlockedNodes.forEach(skills::unlockNode);
                 });
             }
         });

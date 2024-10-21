@@ -15,6 +15,7 @@ public class SpellModifierRegistry {
         registry.put("amplificationModifier", AmplificationModifier::fromNBT);
         registry.put("damageBoostModifier", DamageBoostModifier::fromNBT);
         registry.put("durationModifier", DurationModifier::fromNBT);
+        registry.put("aoe", AoEModifier::fromNBT);
     }
 
     public static Function<CompoundTag, SpellModifier> getModifier(String type) {

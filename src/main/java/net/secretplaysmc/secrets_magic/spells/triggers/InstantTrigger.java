@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.level.Level;
 import net.secretplaysmc.secrets_magic.spells.Spell;
-import net.secretplaysmc.secrets_magic.spells.modifiers.DurationModifier;
 
 public class InstantTrigger implements SpellTrigger {
     @Override

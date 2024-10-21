@@ -5,10 +5,7 @@ import net.secretplaysmc.secrets_magic.spells.effects.BuffEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.FireballEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.ProjectileEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.SpellEffect;
-import net.secretplaysmc.secrets_magic.spells.modifiers.AmplificationModifier;
-import net.secretplaysmc.secrets_magic.spells.modifiers.DamageBoostModifier;
-import net.secretplaysmc.secrets_magic.spells.modifiers.DurationModifier;
-import net.secretplaysmc.secrets_magic.spells.modifiers.SpellModifier;
+import net.secretplaysmc.secrets_magic.spells.modifiers.*;
 import net.secretplaysmc.secrets_magic.spells.triggers.InstantTrigger;
 import net.secretplaysmc.secrets_magic.spells.triggers.SpellTrigger;
 
@@ -32,7 +29,7 @@ public class CustomSpellCreation {
         } else if (type.equals("Fireball")) {
             return new FireballEffect();
         } else if (type.equals("Heal")) {
-            return new BuffEffect(MobEffects.REGENERATION, 200);
+            return new BuffEffect(MobEffects.REGENERATION);
         }
         return new ProjectileEffect();
     }
@@ -40,11 +37,11 @@ public class CustomSpellCreation {
     private static List<SpellModifier> getModifiersForModifier(String modifier) {
         // Logic to convert modifier string into a list of SpellModifiers
         List<SpellModifier> modifiers = new ArrayList<>();
-        if (modifier.equals("Amplification")) {
+        if (modifier.contains("Amplification")) {
             modifiers.add(new AmplificationModifier(1));
-        } else if (modifier.equals("DamageBonus")) {
+        } else if (modifier.contains("DamageBonus")) {
             modifiers.add(new DamageBoostModifier(1));
-        } else if (modifier.equals("Duration")) {
+        } else if (modifier.contains("Duration")) {
             modifiers.add(new DurationModifier(600));
         }
         return modifiers;

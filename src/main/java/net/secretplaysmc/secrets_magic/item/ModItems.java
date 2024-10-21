@@ -6,6 +6,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.secretplaysmc.secrets_magic.SecretsMagic;
+import net.secretplaysmc.secrets_magic.item.custom.DevWandItem;
 import net.secretplaysmc.secrets_magic.item.custom.MetalDetectorItem;
 import net.secretplaysmc.secrets_magic.item.custom.ModArmorItem;
 import net.secretplaysmc.secrets_magic.item.custom.WandItem;
@@ -45,7 +46,10 @@ public class ModItems {
 
     // Unique Items
     public static final RegistryObject<Item> WAND = ITEMS.register("wand",
-            () -> new WandItem(new Item.Properties().durability(100)));
+            () -> new WandItem(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON)));
+    public static final RegistryObject<Item> DEV_WAND = ITEMS.register("dev_wand",
+            () -> new DevWandItem(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC).fireResistant()));
+
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
