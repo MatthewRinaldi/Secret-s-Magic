@@ -69,7 +69,7 @@ public class SkillTreeScreen extends Screen {
                 if (unlocked) {
                     color = 0xFFFFFFFF;
                 } else {
-                    color = 0x5A5A5A5A;
+                    color = 0xFF5A5A5A;
                 }
                 int previousYOffset = yOffset - 40;  // Adjust based on your yOffset increment
                 drawSimpleLine(guiGraphics, centerX, centerY + previousYOffset,

@@ -78,7 +78,7 @@ public class ModSpells {
                 50,
                 20,
                 new FireballEffect(),
-                Arrays.asList(new DamageBoostModifier(3), new AoEModifier(1, false)),
+                Arrays.asList(new AoEModifier(1, false)),
                 new InstantTrigger()
         ));
 
@@ -87,7 +87,7 @@ public class ModSpells {
                 50,
                 20,
                 new FireballEffect(),
-                Arrays.asList(new DamageBoostModifier(3), new AoEModifier(3, false)),
+                Arrays.asList(new AoEModifier(5, false)),
                 new InstantTrigger()
         ));
     }
