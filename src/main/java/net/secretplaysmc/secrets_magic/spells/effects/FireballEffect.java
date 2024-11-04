@@ -17,13 +17,13 @@ import java.util.List;
 public class FireballEffect implements SpellEffect{
 
     private float velocity = 2.0F;
-    private float power = 2.0F;
+    private float power = 1.0F;
 
 
     @Override
     public void apply(Level world, ServerPlayer player, ItemStack wandItem, List<SpellModifier> modifiers) {
 
-        ExplosiveSmallFireball fireball = new ExplosiveSmallFireball(world, player, 0, 0, 0, power);
+        ExplosiveSmallFireball fireball = new ExplosiveSmallFireball(world, player, 0, 0, 0, power, 0);
         fireball.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, velocity, 0.0F);
         fireball.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
 

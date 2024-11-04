@@ -21,7 +21,6 @@ import net.secretplaysmc.secrets_magic.spells.effects.BuffEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.FireballEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.ProjectileEffect;
 import net.secretplaysmc.secrets_magic.spells.effects.SpellEffect;
-import net.secretplaysmc.secrets_magic.spells.effects.customObjects.ExplosiveSmallFireball;
 
 public class AoEModifier implements SpellModifier{
     private final int radius;
