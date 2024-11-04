@@ -121,6 +121,19 @@ repositories {
     // flatDir {
     //     dir 'libs'
     // }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        forRepositories(fg.repository)
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
+
 }
 
 dependencies {
@@ -145,6 +158,9 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+
+    // More Density Functions
+    implementation fg.deobf("maven.modrinth:HAVlno45:L9nhLHzZ")
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

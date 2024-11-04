@@ -20,6 +20,7 @@ public class ModWorldGenProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
             .add(ForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap);
 
+
     public ModWorldGenProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries, BUILDER, Set.of(SecretsMagic.MOD_ID));
     }

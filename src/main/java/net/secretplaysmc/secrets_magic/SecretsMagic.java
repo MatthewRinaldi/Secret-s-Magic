@@ -2,7 +2,9 @@ package net.secretplaysmc.secrets_magic;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
@@ -30,6 +32,7 @@ import net.secretplaysmc.secrets_magic.util.ModCommands;
 import net.secretplaysmc.secrets_magic.util.ModContainers;
 import net.secretplaysmc.secrets_magic.util.ModKeybindings;
 import net.secretplaysmc.secrets_magic.util.gui.CustomSpellScreen;
+import net.secretplaysmc.secrets_magic.util.worldgen.dimension.ModDimensions;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file

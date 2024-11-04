@@ -5,6 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.secretplaysmc.secrets_magic.SecretsMagic;
+import net.secretplaysmc.secrets_magic.spells.Spell;
 
 import java.util.*;
 
@@ -28,6 +29,9 @@ public class ModSkillTree {
             player -> player.getInventory().countItem(Items.ARROW) >= 32,
             List.of(new NodeRequirement(new ItemStack(Items.ARROW, 32), player -> player.getInventory().countItem(Items.ARROW) >= 32)),
             player -> {
+                if (player.isCreative()) {
+                    return;
+                }
                 int arrowsToRemove = 32;
                 for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
                     ItemStack stack = player.getInventory().getItem(i);
@@ -36,7 +40,7 @@ public class ModSkillTree {
                         stack.shrink(removed);
                         arrowsToRemove -= removed;
                         if (arrowsToRemove <= 0) {
-                            break; // We have removed enough arrows
+                            break;
                         }
                     }
                 }
@@ -56,5 +60,9 @@ public class ModSkillTree {
 
     public static SkillTreeNode getNodeByName(String name) {
         return NODE_MAP.get(name);
+    }
+
+    public static Collection<SkillTreeNode> getAllNodes() {
+        return new ArrayList<>(NODE_MAP.values());
     }
 }

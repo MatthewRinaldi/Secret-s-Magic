@@ -1,5 +1,7 @@
 package net.secretplaysmc.secrets_magic.mana;
 
+import net.minecraft.client.CloudStatus;
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,6 +17,7 @@ import net.secretplaysmc.secrets_magic.SecretsMagic;
 import net.secretplaysmc.secrets_magic.skillTree.PlayerSkillsProvider;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpellsProvider;
+import net.secretplaysmc.secrets_magic.util.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(modid = SecretsMagic.MOD_ID)
 public class AttachCapabilitiesEventHandler {
@@ -36,22 +39,29 @@ public class AttachCapabilitiesEventHandler {
             });
             player.getCapability(PlayerSpellsProvider.PLAYER_SPELLS).ifPresent(spells -> {
                 spells.syncSpellsWithClient(player);
-                if (!spells.knowsSpell("arrow")) {
-                    spells.learnSpell("arrow");
+                if (!spells.knowsSpell("Fireball")) {
+                    spells.learnSpell("Fireball");
                     spells.syncSpellsWithClient(player);
                 }
-                if (!spells.knowsSpell("heal")) {
-                    spells.learnSpell("heal");
+                if (!spells.knowsSpell("Recursive Fireball")) {
+                    spells.learnSpell("Recursive Fireball");
                     spells.syncSpellsWithClient(player);
                 }
-                if (!spells.knowsSpell("fireball")) {
-                    spells.learnSpell("fireball");
+                if (!spells.knowsSpell("Arrow Storm")) {
+                    spells.learnSpell("Arrow Storm");
+                    spells.syncSpellsWithClient(player);
+                }
+                if (!spells.knowsSpell("Arrow Scattershot")) {
+                    spells.learnSpell("Arrow Scattershot");
                     spells.syncSpellsWithClient(player);
                 }
             });
             player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
                 skills.syncSkillsWithClient(player);
             });
+            if (player.level().dimension() == ModDimensions.SHOREDIM_LEVEL_KEY) {
+                Minecraft.getInstance().options.cloudStatus().set(CloudStatus.OFF);
+            }
         }
     }
     @SubscribeEvent

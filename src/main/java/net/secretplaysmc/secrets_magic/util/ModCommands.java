@@ -16,7 +16,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.secretplaysmc.secrets_magic.ModCapabilities;
+import net.secretplaysmc.secrets_magic.skillTree.ModSkillTree;
 import net.secretplaysmc.secrets_magic.skillTree.PlayerSkillsProvider;
+import net.secretplaysmc.secrets_magic.skillTree.SkillTreeNode;
 import net.secretplaysmc.secrets_magic.spells.ModSpells;
 import net.secretplaysmc.secrets_magic.spells.PlayerSpells;
 import net.secretplaysmc.secrets_magic.spells.Spell;
@@ -167,8 +169,8 @@ public class ModCommands {
                                                     return 1;
                                                 })))))
                 .then(Commands.literal("skills")
+                        .requires(source -> source.hasPermission(2))
                         .then(Commands.literal("clear")
-                                .requires(source -> source.hasPermission(2))
                                 .executes(ctx -> {
                                     ServerPlayer player = ctx.getSource().getPlayerOrException();
                                     player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
@@ -177,7 +179,47 @@ public class ModCommands {
                                         skills.syncSkillsWithClient(player);
                                     });
                                     return 1;
+                                }))
+                        .then(Commands.literal("unlock")
+                                .then(Commands.argument("node", StringArgumentType.string())
+                                        .suggests(ModCommands::suggestSkills)
+                                        .executes(ctx -> {
+                                            ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                            String node = StringArgumentType.getString(ctx, "node");
+
+                                            SkillTreeNode SkillNode = ModSkillTree.getNodeByName(node);
+                                            if(SkillNode == null) {
+                                                player.sendSystemMessage(Component.literal(node + " not found!"));
+                                                return 0;
+                                            }
+
+                                            player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
+                                                skills.unlockNode(node);
+                                                player.sendSystemMessage(Component.literal(node + " unlocked!"));
+                                                skills.syncSkillsWithClient(player);
+                                            });
+                                            return 1;
+                                        })))
+                        .then(Commands.literal("unlockall")
+                                .executes(ctx -> {
+                                    ServerPlayer player = ctx.getSource().getPlayerOrException();
+                                    for (String node : ModSkillTree.getAllNodes().stream().map(SkillTreeNode::getName).toList()) {
+                                        player.getCapability(PlayerSkillsProvider.PLAYER_SKILLS).ifPresent(skills -> {
+                                            skills.unlockNode(node);
+                                            skills.syncSkillsWithClient(player);
+                                        });
+                                    }
+                                    player.sendSystemMessage(Component.literal("Unlocked all skill tree nodes!"));
+                                    return 1;
                                 }))));
+    }
+
+    private static CompletableFuture<Suggestions> suggestSkills(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {
+        for (String node : ModSkillTree.getAllNodes().stream().map(SkillTreeNode::getName).toList()) {
+            builder.suggest(node);
+        }
+
+        return builder.buildFuture();
     }
 
     private static CompletableFuture<Suggestions> suggestGlobalSpells(CommandContext<CommandSourceStack> context, SuggestionsBuilder builder) {

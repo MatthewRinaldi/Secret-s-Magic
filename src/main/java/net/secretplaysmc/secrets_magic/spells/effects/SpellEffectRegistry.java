@@ -15,6 +15,7 @@ public class SpellEffectRegistry {
         registry.put("projectileEffect", ProjectileEffect::fromNBT);
         registry.put("fireballEffect", FireballEffect::fromNBT);
         registry.put("buffEffect", BuffEffect::fromNBT);
+        registry.put("dimensionHop", DimensionHop::fromNBT);
     }
 
     public static Function<CompoundTag, SpellEffect> getEffect(String type) {
